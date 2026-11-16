@@ -1,0 +1,15 @@
+Open Adventure: licences
+========================
+
+The game: Colossal Cave Adventure by Will Crowther and Don Woods (1976-
+1995), forward-ported as Open Adventure by Eric S. Raymond and others,
+https://gitlab.com/esr/open-adventure. The authors gave permission for
+this release.
+
+- The program and the cave (adventure.yaml, built into the program) are
+  under the BSD 2-Clause licence (COPYING.txt).
+- The guide (Guide) and ReadMe-OpenAdventure are upstream's, under
+  CC-BY-4.0.
+- The Amiga port's own files (amiga/, AMIGA_PORT.md, package/, tools/,
+  tests/) are under the BSD 2-Clause licence, like the game; the GlowIcon
+  art is The AmiCradle Team's own.

@@ -1,0 +1,6 @@
+# The upstream Open Adventure the port builds: fetched at this commit by
+# package/build-amiga.sh, never kept in this repository.
+OA_URL=https://gitlab.com/esr/open-adventure.git
+OA_COMMIT=e6160529e70a8c7a06b9a5f190d69aa35c4c62f5
+OA_VERSION=1.22
+PORT_VERSION=1.22-gfos1

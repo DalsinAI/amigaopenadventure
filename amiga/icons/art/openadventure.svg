@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Open Adventure GlowIcon art: a brass lantern at a cave mouth. The AmiCradle Team. -->
+  <defs>
+    <radialGradient id="glow" cx="64" cy="70" r="46" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffe9a0" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#ffb000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rock" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7a6a58"/>
+      <stop offset="1" stop-color="#3e342a"/>
+    </linearGradient>
+    <linearGradient id="brass" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8a5a12"/>
+      <stop offset="0.45" stop-color="#f2c45a"/>
+      <stop offset="1" stop-color="#7a4c0c"/>
+    </linearGradient>
+  </defs>
+  <path d="M6 122 L6 58 Q14 18 64 12 Q114 18 122 58 L122 122 Z" fill="url(#rock)" stroke="#221a12" stroke-width="3"/>
+  <path d="M26 122 L26 72 Q32 40 64 36 Q96 40 102 72 L102 122 Z" fill="#120d0a" stroke="#221a12" stroke-width="2"/>
+  <circle cx="64" cy="76" r="46" fill="url(#glow)"/>
+  <path d="M52 50 Q64 34 76 50" fill="none" stroke="#3a2608" stroke-width="5" stroke-linecap="round"/>
+  <rect x="48" y="50" width="32" height="8" rx="3" fill="url(#brass)" stroke="#3a2608" stroke-width="2"/>
+  <rect x="50" y="58" width="28" height="34" rx="4" fill="#fff3b8" stroke="#3a2608" stroke-width="3"/>
+  <path d="M64 64 Q72 74 64 86 Q56 74 64 64 Z" fill="#ff9a1a" stroke="#c45a00" stroke-width="1.5"/>
+  <line x1="58" y1="58" x2="58" y2="92" stroke="#8a5a12" stroke-width="2"/>
+  <line x1="70" y1="58" x2="70" y2="92" stroke="#8a5a12" stroke-width="2"/>
+  <rect x="46" y="92" width="36" height="9" rx="3" fill="url(#brass)" stroke="#3a2608" stroke-width="2"/>
+  <rect x="38" y="104" width="22" height="5" rx="2" fill="#d8b04a" stroke="#3a2608" stroke-width="1.5" transform="rotate(-12 49 106)"/>
+</svg>

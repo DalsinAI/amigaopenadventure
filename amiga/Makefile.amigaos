@@ -1,0 +1,78 @@
+# Open Adventure for GFOS (AmigaOS 3.2 with GFOpenUp), 68040/68060: a
+# console game, built soft float with the stove's fpuauto (the FPU is used
+# when the Amiga has one).
+#
+#   make -f amiga/Makefile.amigaos -j4 OA=/path/to/open-adventure [STOVE=...]
+#
+# OA is upstream at the commit package/openadventure.lock names, with its
+# dungeon.c and dungeon.h made (package/fetch-upstream.sh does both).
+# STOVE is a GFOpenAmigaGCC 16.2.0-open6 stove (prefix/ has the compiler and
+# the NDK). amiga/include/editline/readline.h and amiga/readline.c stand in
+# for editline: the Amiga console edits the line itself.
+#
+# Output: build/amigaos/OpenAdventure/ (the drawer: OpenAdventure, ReadMe,
+# upstream's README and guide, the licence, User/, with GlowIcons),
+# build/amigaos/OpenAdventure.info and Install-OpenAdventure beside them.
+
+OA      ?= ../open-adventure
+STOVE   ?= $(HOME)/AmiCradle/stoves/os32-gcc16-open6
+PREFIX  ?= $(STOVE)/prefix
+CC      = $(PREFIX)/bin/m68k-amigaos-gcc
+CPU     ?= -m68040 -msoft-float
+# -fno-tree-loop-distribute-patterns: GCC 16's loop miscompile.
+OPT     ?= -Os -fomit-frame-pointer -fno-tree-loop-distribute-patterns
+
+VERSION = $(shell sed -n 's/^OA_VERSION=//p' package/openadventure.lock)
+# as upstream's Makefile, less -Werror, the stack protector and FORTIFY
+DEFS    = -D_DEFAULT_SOURCE -DVERSION=\"$(VERSION)\"
+INC     = -Iamiga/include -I$(OA)
+CFLAGS  = -noixemul $(OPT) $(CPU) -std=gnu99 -Wall $(DEFS) $(INC)
+LDFLAGS = -noixemul $(CPU)
+
+BUILD   = build/amigaos
+OBJDIR  = $(BUILD)/obj
+OUT     = $(BUILD)/OpenAdventure
+PROG    = OpenAdventure
+
+UPSTREAM = main init actions score misc saveresume dungeon
+OBJS    = $(UPSTREAM:%=$(OBJDIR)/oa/%.o) $(OBJDIR)/readline.o $(OBJDIR)/amiga_start.o
+
+all: $(OUT)/$(PROG) package
+
+$(OUT)/$(PROG): $(OBJS)
+	@mkdir -p $(OUT)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS)
+
+# upstream's main() is advent_main: amiga/amiga_start.c's main() calls it
+$(OBJDIR)/oa/main.o: $(OA)/main.c $(OA)/advent.h $(OA)/dungeon.h
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -Dmain=advent_main -c -o $@ $<
+
+$(OBJDIR)/oa/%.o: $(OA)/%.c $(OA)/advent.h $(OA)/dungeon.h
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR)/%.o: amiga/%.c amiga/include/editline/readline.h
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+package: $(OUT)/$(PROG) AMIGA_PORT.md amiga/Licences.txt
+	mkdir -p $(OUT)/User
+	cp AMIGA_PORT.md $(OUT)/ReadMe
+	cp $(OA)/README.adoc $(OUT)/ReadMe-OpenAdventure
+	cp $(OA)/advent.adoc $(OUT)/Guide
+	cp $(OA)/COPYING $(OUT)/COPYING.txt
+	cp amiga/Licences.txt $(OUT)/Licences.txt
+	cp amiga/icons/OpenAdventure.info amiga/icons/ReadMe.info $(OUT)/
+	for f in ReadMe-OpenAdventure Guide COPYING.txt Licences.txt; do \
+	    cp amiga/icons/ReadMe.info $(OUT)/$$f.info; done
+	cp amiga/icons/Data.info $(OUT)/User.info
+	cp amiga/icons/OpenAdventure-drawer.info $(BUILD)/OpenAdventure.info
+	cp amiga/Install-OpenAdventure amiga/Install-OpenAdventure.info $(BUILD)/
+
+objs: $(OBJS)
+
+clean:
+	rm -rf $(BUILD)
+
+.PHONY: all package objs clean

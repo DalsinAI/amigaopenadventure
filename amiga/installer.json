@@ -1,0 +1,14 @@
+{
+  "name": "Open Adventure",
+  "version": "1.22-gfos1",
+  "drawer": "OpenAdventure",
+  "program": "OpenAdventure",
+  "cpu": "68040",
+  "fpu": false,
+  "space": 400000,
+  "modules": [],
+  "keep": ["User"],
+  "parent": "Work:Games",
+  "badge": "icons/art/openadventure.png",
+  "script": "Install-OpenAdventure"
+}
